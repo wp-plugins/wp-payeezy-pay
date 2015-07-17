@@ -1,5 +1,5 @@
 === WP Payeezy Payment Pages ===
-Contributors: Richard Rottman
+Contributors: RickRottman
 Tags: First Data, Payeezy, Global Gateway e4, Payments, Hosted Checkout, Payment Page, Recurring, E-Commerce
 Requires at least: 3.0.1
 Tested up to: 4.2.2
