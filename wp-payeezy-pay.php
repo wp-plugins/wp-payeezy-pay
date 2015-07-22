@@ -30,11 +30,11 @@ ob_start();
 <input name="x_recurring_billing_id" value="<?php echo $x_recurring_billing_id;?>" type="hidden" >
 <input name="mode" value="<?php echo $mode;?>" type="hidden" >
 <?php
-echo '<p><label>First Name</label><input name="x_first_name" value="" type="text"></p>'; 
-echo '<p><label>Last Name</label><input name="x_last_name" value="" type="text"></p>'; 
-echo '<p><label>Street Address</label><input name="x_address" value="" type="text"></p>'; 
-echo '<p><label>City</label><input name="x_city" value="" type="text"></p>'; 
-echo '<p><label>State/Province</label><select name="x_state">'; 
+echo '<p><label>First Name</label><input name="x_first_name" value="" type="text" required></p>'; 
+echo '<p><label>Last Name</label><input name="x_last_name" value="" type="text" required></p>'; 
+echo '<p><label>Street Address</label><input name="x_address" value="" type="text" required></p>'; 
+echo '<p><label>City</label><input name="x_city" value="" type="text" required></p>'; 
+echo '<p><label>State/Province</label><select name="x_state" required>'; 
 echo '<option value="Alabama">Alabama</option>';
 echo '<option value="Alaska">Alaska</option>';
 echo '<option value="Arizona">Arizona</option>';
@@ -361,36 +361,36 @@ echo '<option value="Zambia">Zambia</option>';
 echo '<option value="Zimbabwe">Zimbabwe</option>';
 echo '</select></p>';
 
-echo '<p><label>Email</label><input name="x_email" value="" type="text"></p>';
-echo '<p><label>Phone</label><input name="x_phone" value="" type="text"></p>';
+echo '<p><label>Email</label><input name="x_email" value="" type="text" required></p>';
+echo '<p><label>Phone</label><input name="x_phone" value="" type="text" required></p>';
 
 if (!empty($x_invoice_num)) {
     echo '<p><label>';
 	echo $x_invoice_num;
 	echo '</label>';
-	echo '<input name="x_invoice_num" value="" type="text">';
+	echo '<input name="x_invoice_num" value="" type="text" required>';
 	echo '</p>';
 }
 else {
-	echo '<input name="x_invoice_num" value="" type="hidden">';
+	echo '<input name="x_invoice_num" value="" type="hidden" required>';
 	}
 	
 	if (!empty($x_po_num)) {
     echo '<p><label>';
 	echo $x_po_num;
 	echo '</label>';
-	echo '<input name="x_po_num" value="" type="text">';
+	echo '<input name="x_po_num" value="" type="text" required>';
 	echo '</p>';
 }
 else {
-	echo '<input name="x_po_num" value="" type="hidden">';
+	echo '<input name="x_po_num" value="" type="hidden" required>';
 	}
 	
 	if (!empty($x_reference_3)) {
     echo '<p><label>';
 	echo $x_reference_3;
 	echo '</label>';
-	echo '<input name="x_reference_3" value="" type="text">';
+	echo '<input name="x_reference_3" value="" type="text" required>';
 	echo '</p>';
 }
 else {
@@ -402,7 +402,7 @@ if (!empty($x_user1)) {
     echo '<p><label>';
 	echo $x_user1;
 	echo '</label>';
-	echo '<input name="x_user1" value="" type="text">';
+	echo '<input name="x_user1" value="" type="text" required>';
 	echo '</p>';
 }
 else {
@@ -413,7 +413,7 @@ if (!empty($x_user2)) {
     echo '<p><label>';
 	echo $x_user2;
 	echo '</label>';
-	echo '<input name="x_user2" value="" type="text">';
+	echo '<input name="x_user2" value="" type="text" required>';
 	echo '</p>';
 }
 else {
