@@ -3,7 +3,7 @@ Contributors: RickRottman
 Tags: First Data, Payeezy, Global Gateway e4, Payments, Hosted Checkout, Payment Page, Recurring, E-Commerce
 Requires at least: 3.0.1
 Tested up to: 4.2.2
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -105,6 +105,10 @@ Twitter: [@RLRottman](https://twitter.com/RLRottman)
 
 == Changelog ==
 
+= 1.1 = 
+
+* Changed the field values to be required values if they are added to the form. If a cardholder leaves a field blank, they will be told the field is required before proceeding. 
+
 = 1.0 =
 
 * Initial release.
@@ -112,5 +116,6 @@ Twitter: [@RLRottman](https://twitter.com/RLRottman)
 
 == Upgrade Notice ==
 
+= 1.1 =
 
-No upgrades yet.
+Fixed form fields so that they are required to be filled in by the cardholder. If you include a field in the form, the cardholder will not be allowed to proceed to Payeezy until they enter something.
