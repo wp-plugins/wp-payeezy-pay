@@ -1,13 +1,13 @@
-=== WP Payeezy Payment Pages ===
+=== WP Payeezy Pay ===
 Contributors: RickRottman
 Tags: First Data, Payeezy, Global Gateway e4, Payments, Hosted Checkout, Payment Page, Recurring, E-Commerce
 Requires at least: 3.0.1
-Tested up to: 4.2.2
+Tested up to: 4.2.3
 Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Connects a WordPress site to First Data's Payeezy Gateway using the Payment Page or Hosted Checkout method. No SSL required! 
+Connects a WordPress site to First Data's Payeezy Gateway using the Payment Page or Hosted Checkout method. Very easy to set up. No SSL required! 
 
 == Description ==
 
