@@ -1,18 +1,17 @@
 <?php
 /*
 Plugin Name: WP Payeezy Pay
-Version: 1.1
-Plugin URI: http://bentcorner.com/about/
+Version: 1.2
+Plugin URI: http://www.richard-rottman.com/
 Description: Connects a WordPress site to First Data's Payeezy Gateway, formally known as Global Gateway e4, using the Payment Page or Hosted Checkout method. No SSL required! 
 Author: Richard Rottman
-Author URI: http://bentcorner.com/about/
+Author URI: http://www.richard-rottman.com/
 */
 
 function wppayeezypaymentform() {
 
 $x_login = get_option('x_login') ;
 $transaction_key = get_option('transaction_key') ;
-$x_recurring_billing_id = get_option('x_recurring_billing_id') ;
 $x_user1 = get_option('x_user1') ;
 $x_user2 = get_option('x_user2') ;
 $x_user3 = get_option('x_user3') ;
@@ -27,7 +26,6 @@ ob_start();
 <form action="<?php echo $pay_file;?>" method="post">
 <input name="x_login" value="<?php echo $x_login;?>" type="hidden" > 
 <input name="transaction_key" value="<?php echo $transaction_key;?>" type="hidden" >
-<input name="x_recurring_billing_id" value="<?php echo $x_recurring_billing_id;?>" type="hidden" >
 <input name="mode" value="<?php echo $mode;?>" type="hidden" >
 <?php
 echo '<p><label>First Name</label><input name="x_first_name" value="" type="text"></p>'; 
@@ -431,15 +429,10 @@ else {
 	echo '<input name="x_user3" value="" type="hidden">';
 	}
 
-echo '<p><label>Total Amount</label>$ <input name="x_amount" id="amount" value="" type="text" required></p>';
+echo '<p><label>Total Amount</label> $ <input name="x_amount" id="amount" value="" type="text" required></p>';
 echo '<br>';
 echo '<br>';
 
-if (!empty($x_recurring_billing_id)) {
-    echo '<p><input type="checkbox" name="recurring" value="TRUE" >&nbsp;Automatically repeat this same payment once a month, beginning in 30 days.</p>';
-}
-
-echo '<br>';
 echo '<p><input type="submit" value="Pay Now"></p>';
 echo '</form>';
 echo '<hr>';
@@ -454,7 +447,7 @@ add_action('admin_menu', 'wppayeezypay_create_menu');
 function wppayeezypay_create_menu() {
 
 	//create new top-level menu
-	add_menu_page('WP Payeezy Payment Pages Settings', 'WP Payeezy Payment Pages', 'administrator', __FILE__, 'wppayeezypay_settings_page' );
+	add_menu_page('WP Payeezy Pay Settings', 'WP Payeezy Pay', 'administrator', __FILE__, 'wppayeezypay_settings_page' );
 
 	//call register settings function
 	add_action( 'admin_init', 'register_wppayeezypay_settings' );
@@ -466,7 +459,6 @@ function register_wppayeezypay_settings() {
 	//register our settings
 	register_setting( 'wppayeezypay-group', 'x_login' );
 	register_setting( 'wppayeezypay-group', 'transaction_key' );
-	register_setting( 'wppayeezypay-group', 'x_recurring_billing_id' );
 	register_setting( 'wppayeezypay-group', 'x_user1' );
 	register_setting( 'wppayeezypay-group', 'x_user2' );
 	register_setting( 'wppayeezypay-group', 'x_user3' );
@@ -486,7 +478,7 @@ $readme_wp_payeezy_pay = plugins_url('wp-payeezy-pay/readme.txt');
 ?>
 
 <div class="wrap">
-<h2>WP Payeezy Payment Pages</h2>
+<h2>WP Payeezy Pay</h2>
 <form method="post" action="options.php">
     <?php settings_fields( 'wppayeezypay-group' ); ?>
     <?php do_settings_sections( 'wppayeezypay-group' ); ?>
@@ -517,13 +509,9 @@ $readme_wp_payeezy_pay = plugins_url('wp-payeezy-pay/readme.txt');
 <h3>Optional Settings</h3>
 <table class="form-table">
 <tr valign="top">
-       	
-		<tr valign="top">
-				<th scope="row">Recurring Billing ID </th>
-				<td valign="top"><input type="text" name="x_recurring_billing_id" value="<?php echo esc_attr( get_option('x_recurring_billing_id') ); ?>" /></td>
-				</tr>
-				
-				 <th scope="row">Payment Notification</th>
+       	<em>If you would like to receive a notification email when<br>a payment is made, enter the email address below.</em> 
+		
+		<th scope="row">Email Payment Notification</th>
         <td><input type="text" name="x_merchant_email" value="<?php echo esc_attr( get_option('x_merchant_email') ); ?>" /></td>
 		</tr>
 		</table> 
