@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: WP Payeezy Pay
-Version: 1.2
+Version: 1.3
 Plugin URI: http://www.richard-rottman.com/
 Description: Connects a WordPress site to First Data's Payeezy Gateway, formally known as Global Gateway e4, using the Payment Page or Hosted Checkout method. No SSL required! 
 Author: Richard Rottman
@@ -16,6 +16,11 @@ $x_user1 = get_option('x_user1') ;
 $x_user2 = get_option('x_user2') ;
 $x_user3 = get_option('x_user3') ;
 $mode = get_option ('mode') ;
+$x_merchant_email = get_option('x_merchant_email');
+$x_invoice_num = get_option('x_invoice_num');
+$x_po_num = get_option('x_po_num');
+$x_description = get_option('x_description');
+$x_reference_3 = get_option('x_reference_3');
 $pay_file = plugins_url('wp-payeezy-pay/pay.php');
 $x_merchant_email = get_option('x_merchant_email') ;
 ob_start();
