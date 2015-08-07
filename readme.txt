@@ -3,7 +3,7 @@ Contributors: RickRottman
 Tags: First Data, Payeezy, Global Gateway e4, Payments, Hosted Checkout, Payment Page, E-Commerce
 Requires at least: 3.0.1
 Tested up to: 4.2.4
-Stable tag: 1.3
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,7 @@ Plugin creates a shortcode that when placed in the page or a post, generates a p
 * User Defined 2 (optional)
 * User Defined 3 (optional)
 * Amount
+* The choice to make payment again automatically on a recurring, monthly basis (optional). 
 
 Once a customer enters their information, they press the "Pay Now" button. They are then redirected to the secure Payeezy payment form hosted by First Data where they finish entering their information including credit card number, expiration date, and security code. The customer then clicks "Pay with your credit card" and the payment is made. Once the transaction is complete, the user is provided a receipt. They can then click a button and be redirected back to the original website. 
 
@@ -101,6 +102,14 @@ Twitter: [@RLRottman](https://twitter.com/RLRottman)
 
 
 == Changelog ==
+
+= 1.4 = 
+
+* Added the ability to do Recurring.
+
+= 1.3 = 
+
+* Fixed a typo that wasn't allowing x_reference_3 to work. 
 
 = 1.2 = 
 

@@ -7,7 +7,7 @@ Processing...
 <style media="screen" type="text/css">
 
 body {
-    background-color: #EAFEEA;
+    background-color: #efefef;
 }
 
 h2 {
