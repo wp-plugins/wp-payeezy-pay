@@ -440,12 +440,12 @@ else {
 	echo '<input name="x_user3" value="" type="hidden">';
 	}
 
-echo '<p><label>Total Amount</label>$ <input name="x_amount" id="amount" value="" type="text" required></p>';
+echo '<p><label>Amount</label><input name="x_amount" id="amount" value="" type="text" required></p>';
 echo '<br>';
 echo '<br>';
 
 if (!empty($x_recurring_billing_id)) {
-    echo '<p><input type="checkbox" name="recurring" value="TRUE" >&nbsp;Automatically repeat this same payment once a month, beginning in 30 days.</p>';
+    echo '<p><input type="checkbox" name="recurring" value="TRUE" >&nbsp;Automatically repeat this same payment once a month, beginning 30 days from today.</p>';
 }
 
 echo '<br>';
