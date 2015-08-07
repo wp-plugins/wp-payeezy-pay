@@ -496,7 +496,7 @@ $readme_wp_payeezy_pay = plugins_url('wp-payeezy-pay/readme.txt');
 
 <div class="wrap">
 <h2>WP Payeezy Pay</h2>
-<form method="post" action="../../../../Applications/MAMP/htdocs/wordpress/wp-content/plugins/wp-payeezy-pay/options.php">
+<form method="post" action="options.php">
     <?php settings_fields( 'wppayeezypay-group' ); ?>
     <?php do_settings_sections( 'wppayeezypay-group' ); ?>
 	<div style="background: none repeat scroll 0 0 #fff;border: 1px solid #bbb;color: #444;margin: 10px 0;padding: 20px;text-shadow: 1px 1px #FFFFFF;width:800px">
