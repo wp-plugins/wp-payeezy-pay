@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: WP Payeezy Pay
-Version: 1.3
-Plugin URI: http://www.richard-rottman.com/
+Version: 1.4
+Plugin URI: http://bentcorner.com/wp-payeezy-pay/
 Description: Connects a WordPress site to First Data's Payeezy Gateway, formally known as Global Gateway e4, using the Payment Page or Hosted Checkout method. No SSL required! 
 Author: Richard Rottman
 Author URI: http://www.richard-rottman.com/
@@ -12,17 +12,22 @@ function wppayeezypaymentform() {
 
 $x_login = get_option('x_login') ;
 $transaction_key = get_option('transaction_key') ;
+$x_recurring_billing_id = get_option('x_recurring_billing_id') ;
 $x_user1 = get_option('x_user1') ;
 $x_user2 = get_option('x_user2') ;
 $x_user3 = get_option('x_user3') ;
 $mode = get_option ('mode') ;
-$x_merchant_email = get_option('x_merchant_email');
+if (empty($x_recurring_billing_id)) {
+    $pay_file = plugins_url('wp-payeezy-pay/pay.php');
+}
+else {$pay_file = plugins_url('wp-payeezy-pay/pay-rec.php');
+}
+
+$x_merchant_email = get_option('x_merchant_email') ;
 $x_invoice_num = get_option('x_invoice_num');
 $x_po_num = get_option('x_po_num');
 $x_description = get_option('x_description');
 $x_reference_3 = get_option('x_reference_3');
-$pay_file = plugins_url('wp-payeezy-pay/pay.php');
-$x_merchant_email = get_option('x_merchant_email') ;
 ob_start();
 ?>
 <div id="wp_payeezy_payment_form">
@@ -31,13 +36,14 @@ ob_start();
 <form action="<?php echo $pay_file;?>" method="post">
 <input name="x_login" value="<?php echo $x_login;?>" type="hidden" > 
 <input name="transaction_key" value="<?php echo $transaction_key;?>" type="hidden" >
+<input name="x_recurring_billing_id" value="<?php echo $x_recurring_billing_id;?>" type="hidden" >
 <input name="mode" value="<?php echo $mode;?>" type="hidden" >
 <?php
-echo '<p><label>First Name</label><input name="x_first_name" value="" type="text"></p>'; 
-echo '<p><label>Last Name</label><input name="x_last_name" value="" type="text"></p>'; 
-echo '<p><label>Street Address</label><input name="x_address" value="" type="text"></p>'; 
-echo '<p><label>City</label><input name="x_city" value="" type="text"></p>'; 
-echo '<p><label>State/Province</label><select name="x_state">'; 
+echo '<p><label>First Name</label><input name="x_first_name" value="" type="text" required></p>'; 
+echo '<p><label>Last Name</label><input name="x_last_name" value="" type="text" required></p>'; 
+echo '<p><label>Street Address</label><input name="x_address" value="" type="text" required></p>'; 
+echo '<p><label>City</label><input name="x_city" value="" type="text" required></p>'; 
+echo '<p><label>State/Province</label><br><select name="x_state" required>'; 
 echo '<option value="Alabama">Alabama</option>';
 echo '<option value="Alaska">Alaska</option>';
 echo '<option value="Arizona">Arizona</option>';
@@ -108,7 +114,7 @@ echo '<option value="" disabled="disabled">-------------</option>';
 echo '<option value="N/A">Not Applicable</option>';
 echo '</select></p>';
 echo '<p><label>Zip Code</label><input name="x_zip" value="" type="text"></p>'; 
-echo '<p><select id="x_country" name="x_country" onchange="switch_province()" tabindex="10">';
+echo '<p><label>Country</label><br><select id="x_country" name="x_country" onchange="switch_province()" tabindex="10">';
 echo '<option value="United States" selected="selected">United States</option>';
 echo '<option value="Canada">Canada</option>';
 echo '<option value="" disabled="disabled">-------------</option>';
@@ -364,36 +370,36 @@ echo '<option value="Zambia">Zambia</option>';
 echo '<option value="Zimbabwe">Zimbabwe</option>';
 echo '</select></p>';
 
-echo '<p><label>Email</label><input name="x_email" value="" type="text"></p>';
-echo '<p><label>Phone</label><input name="x_phone" value="" type="text"></p>';
+echo '<p><label>Email</label><input name="x_email" value="" type="text" required></p>';
+echo '<p><label>Phone</label><input name="x_phone" value="" type="text" required></p>';
 
 if (!empty($x_invoice_num)) {
     echo '<p><label>';
 	echo $x_invoice_num;
 	echo '</label>';
-	echo '<input name="x_invoice_num" value="" type="text">';
+	echo '<input name="x_invoice_num" value="" type="text" required>';
 	echo '</p>';
 }
 else {
-	echo '<input name="x_invoice_num" value="" type="hidden">';
+	echo '<input name="x_invoice_num" value="" type="hidden" required>';
 	}
 	
 	if (!empty($x_po_num)) {
     echo '<p><label>';
 	echo $x_po_num;
 	echo '</label>';
-	echo '<input name="x_po_num" value="" type="text">';
+	echo '<input name="x_po_num" value="" type="text" required>';
 	echo '</p>';
 }
 else {
-	echo '<input name="x_po_num" value="" type="hidden">';
+	echo '<input name="x_po_num" value="" type="hidden" required>';
 	}
 	
 	if (!empty($x_reference_3)) {
     echo '<p><label>';
 	echo $x_reference_3;
 	echo '</label>';
-	echo '<input name="x_reference_3" value="" type="text">';
+	echo '<input name="x_reference_3" value="" type="text" required>';
 	echo '</p>';
 }
 else {
@@ -405,7 +411,7 @@ if (!empty($x_user1)) {
     echo '<p><label>';
 	echo $x_user1;
 	echo '</label>';
-	echo '<input name="x_user1" value="" type="text">';
+	echo '<input name="x_user1" value="" type="text" required>';
 	echo '</p>';
 }
 else {
@@ -416,7 +422,7 @@ if (!empty($x_user2)) {
     echo '<p><label>';
 	echo $x_user2;
 	echo '</label>';
-	echo '<input name="x_user2" value="" type="text">';
+	echo '<input name="x_user2" value="" type="text" required>';
 	echo '</p>';
 }
 else {
@@ -434,10 +440,15 @@ else {
 	echo '<input name="x_user3" value="" type="hidden">';
 	}
 
-echo '<p><label>Total Amount</label> $ <input name="x_amount" id="amount" value="" type="text" required></p>';
+echo '<p><label>Total Amount</label>$ <input name="x_amount" id="amount" value="" type="text" required></p>';
 echo '<br>';
 echo '<br>';
 
+if (!empty($x_recurring_billing_id)) {
+    echo '<p><input type="checkbox" name="recurring" value="TRUE" >&nbsp;Automatically repeat this same payment once a month, beginning in 30 days.</p>';
+}
+
+echo '<br>';
 echo '<p><input type="submit" value="Pay Now"></p>';
 echo '</form>';
 echo '<hr>';
@@ -452,7 +463,7 @@ add_action('admin_menu', 'wppayeezypay_create_menu');
 function wppayeezypay_create_menu() {
 
 	//create new top-level menu
-	add_menu_page('WP Payeezy Pay Settings', 'WP Payeezy Pay', 'administrator', __FILE__, 'wppayeezypay_settings_page' );
+	add_menu_page('WP Payeezy Pay', 'WP Payeezy Pay', 'administrator', __FILE__, 'wppayeezypay_settings_page' );
 
 	//call register settings function
 	add_action( 'admin_init', 'register_wppayeezypay_settings' );
@@ -464,6 +475,7 @@ function register_wppayeezypay_settings() {
 	//register our settings
 	register_setting( 'wppayeezypay-group', 'x_login' );
 	register_setting( 'wppayeezypay-group', 'transaction_key' );
+	register_setting( 'wppayeezypay-group', 'x_recurring_billing_id' );
 	register_setting( 'wppayeezypay-group', 'x_user1' );
 	register_setting( 'wppayeezypay-group', 'x_user2' );
 	register_setting( 'wppayeezypay-group', 'x_user3' );
@@ -484,7 +496,7 @@ $readme_wp_payeezy_pay = plugins_url('wp-payeezy-pay/readme.txt');
 
 <div class="wrap">
 <h2>WP Payeezy Pay</h2>
-<form method="post" action="options.php">
+<form method="post" action="../../../../Applications/MAMP/htdocs/wordpress/wp-content/plugins/wp-payeezy-pay/options.php">
     <?php settings_fields( 'wppayeezypay-group' ); ?>
     <?php do_settings_sections( 'wppayeezypay-group' ); ?>
 	<div style="background: none repeat scroll 0 0 #fff;border: 1px solid #bbb;color: #444;margin: 10px 0;padding: 20px;text-shadow: 1px 1px #FFFFFF;width:800px">
@@ -514,9 +526,13 @@ $readme_wp_payeezy_pay = plugins_url('wp-payeezy-pay/readme.txt');
 <h3>Optional Settings</h3>
 <table class="form-table">
 <tr valign="top">
-       	<em>If you would like to receive a notification email when<br>a payment is made, enter the email address below.</em> 
-		
-		<th scope="row">Email Payment Notification</th>
+       	
+		<tr valign="top">
+				<th scope="row">Recurring Billing ID </th>
+				<td valign="top"><input type="text" name="x_recurring_billing_id" value="<?php echo esc_attr( get_option('x_recurring_billing_id') ); ?>" /></td>
+				</tr>
+				
+				 <th scope="row">Payment Notification</th>
         <td><input type="text" name="x_merchant_email" value="<?php echo esc_attr( get_option('x_merchant_email') ); ?>" /></td>
 		</tr>
 		</table> 
@@ -524,7 +540,7 @@ $readme_wp_payeezy_pay = plugins_url('wp-payeezy-pay/readme.txt');
 <h3>Optional Payment Form Fields</h3>		
 	 <table class="form-table">
 		<tr valign="top">
-		<em>If you would like to use any of these fields, assign a name to them<br>and they will appear on your payment form.</em> 
+		<em>If you would like to use any of these fields, assign a name to them<br>and they will appear on your payment form. Do not assign a name,<br>and they will not show on your form.</em> 
 		</tr>
 		<tr valign="top">
         <th scope="row">x_invoice_num</th>
