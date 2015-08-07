@@ -126,6 +126,14 @@ Twitter: [@RLRottman](https://twitter.com/RLRottman)
 
 == Upgrade Notice ==
 
+= 1.4 = 
+
+* Added the ability to do Recurring.
+
+= 1.3 = 
+
+* Fixed a typo that wasn't allowing x_reference_3 to work. 
+
 = 1.2 = 
 
 I had to remove the ability to do Recurring. Was causing an error if no Recurring Plan ID was entered in the settings. The ability to add Recurring will be added back in a future update. Stay tuned!
