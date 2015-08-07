@@ -440,7 +440,7 @@ else {
 	echo '<input name="x_user3" value="" type="hidden">';
 	}
 
-echo '<p><label>Total Amount</label>$ <input name="x_amount" id="amount" value="" type="text" required></p>';
+echo '<p><label>Amount</label><input name="x_amount" id="amount" value="" type="text" required></p>';
 echo '<br>';
 echo '<br>';
 
