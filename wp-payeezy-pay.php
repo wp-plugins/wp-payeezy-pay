@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: WP Payeezy Pay
-Version: 1.4
+Version: 2.0
 Plugin URI: http://bentcorner.com/wp-payeezy-pay/
-Description: Connects a WordPress site to First Data's Payeezy Gateway, formally known as Global Gateway e4, using the Payment Page or Hosted Checkout method. No SSL required! 
+Description: Connects a WordPress site to First Data's Payeezy Gateway, formally known as Global Gateway e4, using the Payment Page or Hosted Checkout method. Handles both payments and donations. No SSL ! 
 Author: Richard Rottman
 Author URI: http://www.richard-rottman.com/
 */
@@ -13,37 +13,95 @@ function wppayeezypaymentform() {
 $x_login = get_option('x_login') ;
 $transaction_key = get_option('transaction_key') ;
 $x_recurring_billing_id = get_option('x_recurring_billing_id') ;
+$mode = get_option ('mode') ; // production or demo
+$mode2 = get_option ('mode2') ; // payments or donations
+
+// There are for target php files in the plugin folder that transactional information collected
+// in the form goes to before it's sent to Payeezy. The connection between Payeezy and the website
+// is between the target php. The following if/elseif/else selects which target php file
+// the form goes to based on the criteria. 
+
+if ( $mode2 == "pay") {
+    $pay_file = plugins_url('wp-payeezy-pay/pay.php'); // Payments WITHOUT the option of making the payment recurring.
+}
+
+elseif ( $mode2 == "pay-rec" ) {
+    $pay_file = plugins_url('wp-payeezy-pay/pay-rec.php'); // Payments WITH the option of making the payment recurring.
+}
+
+elseif ( $mode2 == "pay-rec-req" ) {
+    $pay_file = plugins_url('wp-payeezy-pay/pay-rec.php'); // Payments WITH the option of making the payment recurring.
+}
+
+elseif ( $mode2 == "donate"  ) {
+    $pay_file = plugins_url('wp-payeezy-pay/donate.php'); // Donations WITHOUT the option of making the donation recurring.
+}
+
+elseif ( $mode2 == "donate-rec"  ) {
+    $pay_file = plugins_url('wp-payeezy-pay/donate-rec.php'); // Donations WITH the option of making the donation recurring.
+}
+
+elseif ( $mode2 == "donate-rec"  ) {
+    $pay_file = plugins_url('wp-payeezy-pay/donate-rec.php'); // Donations WITH the option of making the donation recurring.
+}
+else {$pay_file = plugins_url('wp-payeezy-pay/dump.php'); // Something must have gone terribly wrong if the payment info is sent here.
+}
+
+// These fields only show on the form if they are named. If they are left blank, they
+// will not show on the published payment form and will not be sent to the Payeezy gateway.
+
+// S T A R T
+
+// This is the Ref. Num that shows in Transactions on the front page.
+$x_invoice_num = get_option('x_invoice_num');
+
+// This is the Cust. Ref. Num that shows in Transactions on the front page. Also referred
+// to as Purchase Order or PO number. It's a reference number submitted by the customer
+// for their own record keeping.
+$x_po_num = get_option('x_po_num');
+
+// This shows up on the final order form as "Item" unless Invoice Number is used.
+// If there is an Invoice Number sent, that overrides the Description. 
+$x_description = get_option('x_description');
+
+// Just an extra reference number if Invoice Number and Customer Reference Number are
+// not enough referance numbers for your purposes. 
+$x_reference_3 = get_option('x_reference_3');
+
+// Next three are custom fields that if passed over to Payeezy, will show populated on
+// the secure order form and the information collected will be passed a long with all the
+// other info. 
 $x_user1 = get_option('x_user1') ;
 $x_user2 = get_option('x_user2') ;
 $x_user3 = get_option('x_user3') ;
-$mode = get_option ('mode') ;
-if (empty($x_recurring_billing_id)) {
-    $pay_file = plugins_url('wp-payeezy-pay/pay.php');
-}
-else {$pay_file = plugins_url('wp-payeezy-pay/pay-rec.php');
-}
 
-$x_merchant_email = get_option('x_merchant_email') ;
-$x_invoice_num = get_option('x_invoice_num');
-$x_po_num = get_option('x_po_num');
-$x_description = get_option('x_description');
-$x_reference_3 = get_option('x_reference_3');
+// If you want to collect the customer's phone number and/or email address, you can do so
+// by giving these two fields a name, such as "phone" and "email."
+$x_phone = get_option('x_phone') ;
+$x_email = get_option('x_email') ;
+
+// E N D 
+
+// Tells WordPress to start remembering everything that would normally be outputted, but
+// not to do anything with it yet.
 ob_start();
 ?>
+
 <div id="wp_payeezy_payment_form">
-<hr>
-<br>
-<form action="<?php echo $pay_file;?>" method="post">
-<input name="x_login" value="<?php echo $x_login;?>" type="hidden" > 
-<input name="transaction_key" value="<?php echo $transaction_key;?>" type="hidden" >
-<input name="x_recurring_billing_id" value="<?php echo $x_recurring_billing_id;?>" type="hidden" >
-<input name="mode" value="<?php echo $mode;?>" type="hidden" >
-<?php
+  <hr>
+  <br>
+  <form action="<?php echo $pay_file;?>" method="post">
+  <input name="x_login" value="<?php echo $x_login;?>" type="hidden" >
+  <input name="transaction_key" value="<?php echo $transaction_key;?>" type="hidden" >
+  <input name="x_recurring_billing_id" value="<?php echo $x_recurring_billing_id;?>" type="hidden" >
+  <input name="mode" value="<?php echo $mode;?>" type="hidden" >
+  <!-- Live (production) or Demo -->
+  <?php
 echo '<p><label>First Name</label><input name="x_first_name" value="" type="text" required></p>'; 
 echo '<p><label>Last Name</label><input name="x_last_name" value="" type="text" required></p>'; 
 echo '<p><label>Street Address</label><input name="x_address" value="" type="text" required></p>'; 
 echo '<p><label>City</label><input name="x_city" value="" type="text" required></p>'; 
-echo '<p><label>State/Province</label><br><select name="x_state" required>'; 
+echo '<p><label>State/Province</label><select name="x_state" required>'; 
 echo '<option value="Alabama">Alabama</option>';
 echo '<option value="Alaska">Alaska</option>';
 echo '<option value="Arizona">Arizona</option>';
@@ -113,8 +171,8 @@ echo '<option value="Yukon">Yukon</option>';
 echo '<option value="" disabled="disabled">-------------</option>';
 echo '<option value="N/A">Not Applicable</option>';
 echo '</select></p>';
-echo '<p><label>Zip Code</label><input name="x_zip" value="" type="text"></p>'; 
-echo '<p><label>Country</label><br><select id="x_country" name="x_country" onchange="switch_province()" tabindex="10">';
+echo '<p><label>Zip Code</label><input name="x_zip" value="" size="7" type="text" required></p>'; 
+echo '<p><label>Country</label><select id="x_country" name="x_country" onchange="switch_province()" tabindex="10">';
 echo '<option value="United States" selected="selected">United States</option>';
 echo '<option value="Canada">Canada</option>';
 echo '<option value="" disabled="disabled">-------------</option>';
@@ -370,9 +428,10 @@ echo '<option value="Zambia">Zambia</option>';
 echo '<option value="Zimbabwe">Zimbabwe</option>';
 echo '</select></p>';
 
-echo '<p><label>Email</label><input name="x_email" value="" type="text" required></p>';
-echo '<p><label>Phone</label><input name="x_phone" value="" type="text" required></p>';
-
+                                                
+// If any of these fields are configured for use, it uses them. If not, it sends them to Payeezy
+// hidden without any values. This stops non-critical php errors from generating.
+// S T A R T 
 if (!empty($x_invoice_num)) {
     echo '<p><label>';
 	echo $x_invoice_num;
@@ -381,7 +440,7 @@ if (!empty($x_invoice_num)) {
 	echo '</p>';
 }
 else {
-	echo '<input name="x_invoice_num" value="" type="hidden" required>';
+	echo '<input name="x_invoice_num" value="" type="hidden" >';
 	}
 	
 	if (!empty($x_po_num)) {
@@ -407,7 +466,7 @@ else {
 	}
 	
 	
-if (!empty($x_user1)) {
+if (!empty($x_user1)) {                                                              
     echo '<p><label>';
 	echo $x_user1;
 	echo '</label>';
@@ -433,21 +492,88 @@ if (!empty($x_user3)) {
     echo '<p><label>';
 	echo $x_user3;
 	echo '</label>';
-	echo '<input name="x_user3" value="" type="text">';
+	echo '<input name="x_user3" value="" type="text" required>';
 	echo '</p>';
 }
 else {
 	echo '<input name="x_user3" value="" type="hidden">';
 	}
 
-echo '<p><label>Amount</label><input name="x_amount" id="amount" value="" type="text" required></p>';
-echo '<br>';
-echo '<br>';
+if (!empty($x_email)) {
+    echo '<p><label>';
+  echo $x_email;
+  echo '</label>';
+  echo '<input name="x_email" value="" type="text" required>';
+  echo '</p>';
+}
+else {
+  echo '<input name="x_email" value="" type="hidden">';
+  }
 
-if (!empty($x_recurring_billing_id)) {
+if (!empty($x_phone)) {
+    echo '<p><label>';
+  echo $x_phone;
+  echo '</label>';
+  echo '<input name="x_phone" value="" type="text" required>';
+  echo '</p>';
+}
+else {
+  echo '<input name="x_phone" value="" type="hidden">';
+  }
+	
+// E N D 
+
+
+// If the purpose of the form is to accept donations, then this produces a series of 
+// donation anounts that can be selected with a radio button. It also creates an "other"
+// choice for custom amounts. If one of the two donation modes is not selected, then a
+// single amount field will be generated.
+if (($mode2 == "donate") || ($mode2 == "donate-rec")) {
+
+echo '<label>Donation Amount</label><br>';
+echo '<input type="radio" name="x_amount1" value="10.00"> $10<br>';
+echo '<input type="radio" name="x_amount1" value="25.00"> $25<br>';
+echo '<input type="radio" name="x_amount1" value="50.00"> $50<br>';
+echo '<input type="radio" name="x_amount1" value="75.00"> $75<br>';
+echo '<input type="radio" name="x_amount1" value="100.00"> $100<br>';
+echo '<input type="radio" name="x_amount1" value="0.00"> Other $ <input id= "other" type="text" name="x_amount2" value="" size="6"><br>';
+echo '<br>';
+}
+
+else {
+
+echo '<p><label>Total Amount</label> $ <input name="x_amount" id="amount" value="" size="7" type="text" ></p>';
+}
+
+// If recurring is optional, a checkbox will be generated that will 
+// give the cardholder the option of repeating the payment or donation every every month,
+// begining in 30 days. If recurring is manditory, there is no checkbox. The transaction
+// is hardcoded for recurring.
+if ($mode2 == "donate-rec" ) {
+    echo '<p id="recurring"><input type="checkbox" name="recurring" value="TRUE" >&nbsp;Automatically repeat this same donation once a month, beginning in 30 days.</p>';
+}
+
+if ($mode2 == "pay-rec" ) {
     echo '<p><input type="checkbox" name="recurring" value="TRUE" >&nbsp;Automatically repeat this same payment once a month, beginning in 30 days.</p>';
 }
 
+if ($mode2 == "pay-rec-req" ) {
+    echo '<input type="hidden" name="recurring" value="TRUE" >';
+}
+
+// Changes the button to either "Pay Now" or "Donate Now" based on what is chosen for
+// mode2. If you don't want these buttons to say what they are configured to say, then
+// feel free to edit them on line 532 or line 541. 
+if (($mode2 === "donate") || ($mode2 === "donate-rec")) {
+echo '<br>';
+echo '<p><input type="submit" value="Donate Now"></p>';
+echo '</form>';
+echo '<hr>';
+echo '</div>';
+return ob_get_clean();
+}
+
+else {
 echo '<br>';
 echo '<p><input type="submit" value="Pay Now"></p>';
 echo '</form>';
@@ -455,7 +581,7 @@ echo '<hr>';
 echo '</div>';
 return ob_get_clean();
 }
-
+}
 
 // create custom plugin settings menu
 add_action('admin_menu', 'wppayeezypay_create_menu');
@@ -480,11 +606,13 @@ function register_wppayeezypay_settings() {
 	register_setting( 'wppayeezypay-group', 'x_user2' );
 	register_setting( 'wppayeezypay-group', 'x_user3' );
 	register_setting( 'wppayeezypay-group', 'mode' );
-	register_setting( 'wppayeezypay-group', 'x_merchant_email' );
+	register_setting( 'wppayeezypay-group', 'mode2' );
 	register_setting( 'wppayeezypay-group', 'x_invoice_num' );
 	register_setting( 'wppayeezypay-group', 'x_po_num' );
 	register_setting( 'wppayeezypay-group', 'x_description' );
 	register_setting( 'wppayeezypay-group', 'x_reference_3' );
+  register_setting( 'wppayeezypay-group', 'x_phone' );
+  register_setting( 'wppayeezypay-group', 'x_email' );
 	
 	}
  
@@ -493,92 +621,119 @@ function wppayeezypay_settings_page() {
 $readme_wp_payeezy_pay = plugins_url('wp-payeezy-pay/readme.txt');
 
 ?>
+  <div class="wrap">
+ <!-- Puts an obnoxious looking text box at the top of the plugin settings that reminds you
+ the plugin in in demo mode, if it's in demo mode. If it's in production mode, no
+ obnoxious warning will be made.-->
 
-<div class="wrap">
-<h2>WP Payeezy Pay</h2>
-<form method="post" action="options.php">
+  <h2>WP Payeezy Pay <?php if( get_option('mode') == "demo" ):
+echo ' is in <span style="color: red;">DEMO</span> mode';
+ endif;?></h2>
+  <form method="post" action="options.php">
     <?php settings_fields( 'wppayeezypay-group' ); ?>
     <?php do_settings_sections( 'wppayeezypay-group' ); ?>
-	<div style="background: none repeat scroll 0 0 #fff;border: 1px solid #bbb;color: #444;margin: 10px 0;padding: 20px;text-shadow: 1px 1px #FFFFFF;width:800px">
-	<p>For detailed instructions on settings these values, refer to the <a href="<?php echo $readme_wp_payeezy_pay;?>" target="_blank">setup instructions</a>.</p>
-	                                                                             
-	<h3>Required Settings</h3>
-	  <table class="form-table">
-        <tr valign="top">
+    <div style="background: none repeat scroll 0 0 #fff;border: 1px solid #bbb;color: #444;margin: 10px 0;padding: 20px;text-shadow: 1px 1px #FFFFFF;width:700px">
+    <p>For detailed instructions on settings these values, refer to the <a href="<?php echo $readme_wp_payeezy_pay;?>" target="_blank">setup instructions</a>.</p>
+    <h3>Settings</h3>
+    <em>Recurring Billing ID is not required if you are not processing recurring transactions. </em>
+    <table class="form-table">
+      <tr valign="top">
         <th scope="row">Payment Page ID</th>
-        <td valign="top"><input type="text" name="x_login" value="<?php echo esc_attr( get_option('x_login') ); ?>" /></td>
-        </tr>
-         
-        <tr valign="top">
+        <td valign="top"><input type="text" size="35" name="x_login" value="<?php echo esc_attr( get_option('x_login') ); ?>" /></td>
+        
+      </tr>
+      <tr valign="top">
         <th scope="row">Transaction Key</th>
-        <td><input type="text" name="transaction_key" value="<?php echo esc_attr( get_option('transaction_key') ); ?>" /></td>
-        </tr>
-		
-		<tr valign="top">
+        <td><input type="text" name="transaction_key" size="35" value="<?php echo esc_attr( get_option('transaction_key') ); ?>" /></td>
+        
+      </tr>
+      <tr valign="top">
         <th scope="row">Mode</th>
         <td><select name="mode"/>
-				<option value="live" <?php if( get_option('mode') == "live" ): echo 'selected'; endif;?> >Live</option>
-				<option value="demo" <?php if( get_option('mode') == "demo" ): echo 'selected'; endif;?> >Demo</option>
-			</select></td>
-		</tr>
-		</table>	
-<hr>
-<h3>Optional Settings</h3>
-<table class="form-table">
-<tr valign="top">
-       	
-		<tr valign="top">
-				<th scope="row">Recurring Billing ID </th>
-				<td valign="top"><input type="text" name="x_recurring_billing_id" value="<?php echo esc_attr( get_option('x_recurring_billing_id') ); ?>" /></td>
-				</tr>
-				
-				 <th scope="row">Payment Notification</th>
-        <td><input type="text" name="x_merchant_email" value="<?php echo esc_attr( get_option('x_merchant_email') ); ?>" /></td>
-		</tr>
-		</table> 
-		<hr>
-<h3>Optional Payment Form Fields</h3>		
-	 <table class="form-table">
-		<tr valign="top">
-		<em>If you would like to use any of these fields, assign a name to them<br>and they will appear on your payment form. Do not assign a name,<br>and they will not show on your form.</em> 
-		</tr>
-		<tr valign="top">
+          
+          <option value="live" <?php if( get_option('mode') == "live" ): echo 'selected'; endif;?> >Live</option>
+          <option value="demo" <?php if( get_option('mode') == "demo" ): echo 'selected'; endif;?> >Demo</option>
+          </select></td>
+      </tr>
+      <tr valign="top">
+        <th scope="row">Type of Transactions</th>
+        <td><select name="mode2"/>
+          
+          <option value="pay" <?php if( get_option('mode2') == "pay" ): echo 'selected'; endif;?> >Payments</option>
+          <option value="pay-rec" <?php if( get_option('mode2') == "pay-rec" ): echo 'selected'; endif;?> >Payments with optional Recurring</option>
+           <option value="pay-rec-req" <?php if( get_option('mode2') == "pay-rec-req" ): echo 'selected'; endif;?> >Payments with automatic Recurring</option>
+          <option value="donate" <?php if( get_option('mode2') == "donate" ): echo 'selected'; endif;?> >Donations</option>
+          <option value="donate-rec" <?php if( get_option('mode2') == "donate-rec" ): echo 'selected'; endif;?> >Donations with optional Recurring</option>
+          </select></td>
+      </tr>
+
+      <tr valign="top">
+        <th scope="row">Recurring Billing ID *</th>
+        <td valign="top"><input type="text" size="35" name="x_recurring_billing_id" value="<?php echo esc_attr( get_option('x_recurring_billing_id') ); ?>" /></td>
+        <?php
+				// If one of the recurring modes is selected and there is not a Recurring Plan ID entered,
+				// a red warning appears next to the field pointing out that one needs to be entered. 
+				$recurring = get_option('x_recurring_billing_id');
+				if (empty($recurring)) {
+				if (( get_option('mode2') === "pay-rec") || ( get_option('mode2') === "donate-rec" ) || ( get_option('mode2') === "pay-rec-req" )){ 
+    			echo "<td valign='top' style='color:red'>&#8656; Please enter a Recurring Billing ID</td>";
+ 				}}
+  				?>
+        </tr>
+        <tr valign="top">
+          <th scope="row"></th>
+          <td valign="top">
+          <em>* Plan must have the Frequecy set to "Monthly."</em></td>
+        </tr>
+    </table>
+    <hr>
+    <h3>Optional Payment Form Fields</h3>
+    <table class="form-table">
+      <tr valign="top"> <em>If you would like to use any of these fields, assign a name to them<br>
+        and they will then appear on your form with that name. Do not assign a name, <br>
+        and they will not appear. If a field appears on your form<br>
+        the cardholder cannot proceed to Payeezy until they enter a value.</em> </tr>
+      <tr valign="top">
         <th scope="row">x_invoice_num</th>
-		<td><input type="text" name="x_invoice_num" value="<?php echo esc_attr( get_option('x_invoice_num') ); ?>" /></td>
-		</tr>
-		
-		<tr valign="top">
+        <td><input type="text" name="x_invoice_num" value="<?php echo esc_attr( get_option('x_invoice_num') ); ?>" /></td>
+      </tr>
+      <tr valign="top">
         <th scope="row">x_po_num</th>
         <td><input type="text" name="x_po_num" value="<?php echo esc_attr( get_option('x_po_num') ); ?>" /></td>
-		</tr>
-		
-		<tr valign="top">
+      </tr>
+      <tr valign="top">
         <th scope="row">x_reference_3</th>
         <td><input type="text" name="x_reference_3" value="<?php echo esc_attr( get_option('x_reference_3') ); ?>" /></td>
-		</tr>
-		
-		<tr valign="top">
+      </tr>
+      <tr valign="top">
         <th scope="row">User Defined 1</th>
-		<td><input type="text" name="x_user1" value="<?php echo esc_attr( get_option('x_user1') ); ?>" /></td>
-		</tr>
-		
-		<tr valign="top">
+        <td><input type="text" name="x_user1" value="<?php echo esc_attr( get_option('x_user1') ); ?>" /></td>
+      </tr>
+      <tr valign="top">
         <th scope="row">User Defined 2</th>
         <td><input type="text" name="x_user2" value="<?php echo esc_attr( get_option('x_user2') ); ?>" /></td>
-		</tr>
-		
-		<tr valign="top">
+      </tr>
+      <tr valign="top">
         <th scope="row">User Defined 3</th>
         <td><input type="text" name="x_user3" value="<?php echo esc_attr( get_option('x_user3') ); ?>" /></td>
-		</tr>
-		
-		</table> 
-		<hr>
-		
+      </tr>
+
+      <tr valign="top">
+        <th scope="row">x_phone</th>
+        <td><input type="text" name="x_phone" value="<?php echo esc_attr( get_option('x_phone') ); ?>" /></td>
+      </tr>
+      <tr valign="top">
+        <th scope="row">x_email</th>
+        <td><input type="text" name="x_email" value="<?php echo esc_attr( get_option('x_email') ); ?>" /></td>
+      </tr>
+    </table>
+    <hr>
     <?php submit_button(); ?>
-<p>To add the Payeezy payment form to a Page or a Post, add the following <a href="https://codex.wordpress.org/Shortcode" target="_blank">shortcode</a> in the Page or Post's content:<br>
-	<pre> [wp_payeezy_payment_form] </pre></p>
-</form>
+    <p>To add the Payeezy payment form to a Page or a Post, add the following <a href="https://codex.wordpress.org/Shortcode" target="_blank">shortcode</a> in the Page or Post's content:<br>
+    <pre> [wp_payeezy_payment_form] </pre>
+    </p>
+    <p>Need help? Feel free to contact me at <a <a href="mailto:info@richard-rottman.com">info@richard-rottman.com</a>.</p>
+  </form>
 </div>
 </div>
 <?php } ?>
