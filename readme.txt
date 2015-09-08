@@ -1,13 +1,14 @@
 === WP Payeezy Pay ===
 Contributors: RickRottman
-Tags: First Data, Payeezy, Global Gateway e4, Payments, Hosted Checkout, Payment Page, E-Commerce
+Donate link: https://www.paypal.me/RichardRottman
+Tags: First Data, Payeezy, Global Gateway e4, Payments, Hosted Checkout, Payment Page, E-Commerce, Recurring
 Requires at least: 3.0.1
 Tested up to: 4.2.4
-Stable tag: 1.4
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Connects a WordPress site to First Data's Payeezy Gateway using the Payment Page or Hosted Checkout method. Very easy to set up. No SSL required! 
+Connects a WordPress site to First Data's Payeezy Gateway. No SSL required! 
 
 == Description ==
 
@@ -20,19 +21,18 @@ Plugin creates a shortcode that when placed in the page or a post, generates a p
 * State (dropdown)
 * Zip Code
 * Country (dropdown)
-* Email Address
-* Phone Number
-* Comment
+* Email Address (optional)
+* Phone Number (optional)
 * x_invoice_num (optional)
 * x_po_num (optional)
 * x_reference_3 (optional)
 * User Defined 1 (optional)
 * User Defined 2 (optional)
 * User Defined 3 (optional)
-* Amount
-* The choice to make payment again automatically on a recurring, monthly basis (optional). 
+* Amount (optionally recurring every month)
+* "Pay Now" or "Donate Now" button
 
-Once a customer enters their information, they press the "Pay Now" button. They are then redirected to the secure Payeezy payment form hosted by First Data where they finish entering their information including credit card number, expiration date, and security code. The customer then clicks "Pay with your credit card" and the payment is made. Once the transaction is complete, the user is provided a receipt. They can then click a button and be redirected back to the original website. 
+Once a customer enters their information, they press the "Pay Now" or “Donate Now” button. They are then redirected to the secure Payeezy payment form hosted by First Data where they finish entering their information including credit card number, expiration date, and security code. The customer then clicks "Pay with your credit card" and the payment is made. Once the transaction is complete, the user is provided a receipt. They can then click a button and be redirected back to the original website. 
 
 == Installation ==
 
@@ -58,9 +58,19 @@ Once a customer enters their information, they press the "Pay Now" button. They 
 
 2. Chose the Mode you wish to use, Live for a production account, one that actually processes credit cards, or Demo for a non-production testing account.
 
-3. Enter an email address into the Payment Notification field if you would like a second notification email sent out when a payment is made. The notification email goes to the email entered in section one of the Payment Page Settings, this is a duplication of that email. This is intended for merchants who would like more than one individual to be informed when a payment is made. Leave it blank if you do not want Payeezy to send a second notification email.
+3. Enter the Type of Transactions you want the Payment Page to make:
 
-4. Enter names for the optional payment form fields that you would like to use with your payment form. If you leave any of these fields blank, they will not appear on the published payment for. For example, if you want your customers to enter their invoice number on the bill they are paying, you would enter "Invoice Number" in the x_invoice_num field. A field will then appear on the published payment form for Invoice Number. The value entered by the cardholder will be passed to Payeezy and it will be part of the transaction record. 
+	* Payments  - All payments are done on a singular basis. 
+
+	* Payments with optional Recurring - Customer has the option of clicking a box that will repeat their payment automatically in 30 days. If they don’t click the box, the payment is handled as a single payment. Recurring payment will continue until the Payeezy Merchant Administrator goes into Recurring and suspends or deletes the Recurring payment.
+ 
+	* Payments with automatic Recurring - Customer doesn’t get a checkbox to make the payment recurring. The transaction will automatically be made again in 30 days and will continue until the Payeezy Merchant Administrator goes into Recurring and suspends or deletes the Recurring payment. Good for gym memberships, karate schools, etc.
+
+	* Donations - Cardholder will have the option of making a donation by selecting a predefined amount. If none of the predefined amounts are optimal, they can select “Other” and enter their own. Instead of a button labeled “Pay Now” to go to the secure payment form hosted by First Data, the button will be labeled “Donate Now.” 
+
+	* Donations with optional Recuring - This is just like the above, but it gives the cardholder the option of making their donation on a monthly recurring basis by clicking a box. Recurring donations will continue until the Payeezy Merchant Administrator goes into Recurring and suspends or deletes the Recurring donation. 
+
+4. Enter names for the optional payment form fields that you would like to use with your payment form. If you leave any of these fields blank, they will not appear on the published payment for. For example, if you want your customers to enter their invoice number on the bill they are paying, you would enter "Invoice Number" in the x_invoice_num field. A field will then appear on the published payment form for Invoice Number. The value entered by the cardholder will be passed on to Payeezy and it will be part of the transaction record. 
 
 5. Press 'Save Settings'.
 
@@ -79,10 +89,9 @@ Once a customer enters their information, they press the "Pay Now" button. They 
 = Is this plugin an official First Data Payeezy product? =
 
 No! This plugin is independent of First Data Payeezy, but was built using their [sample code](https://support.payeezy.com/hc/en-us/articles/204011429-Sample-Code-for-Creating-a-Pay-Button-to-use-with-a-Hosted-Payment-Page). 
-
 = Can I style the payment form? =
 
-Yes. The is a text file included in the plugin folder that contains css.
+Yes. The is a text file included in the plugin folder that contains css. Copy it and paste it at the bottom of your theme's stylesheet.
 
 = May I contact you if I have any questions or suggestions? =
 
@@ -102,6 +111,10 @@ Twitter: [@RLRottman](https://twitter.com/RLRottman)
 
 
 == Changelog ==
+
+= 2.0 = 
+
+* Combined this plugin with my other plugin, WP Payeezy Donate. All features found in that plugin are now rolled into this plugin. Going forward, this will be the only plugin updated, assuming updates are needed. Settings page now shows an error if you don't enter the Payment Page ID or the Transaction Key. If you select a Transaction Type option that supports Recurring and if you save the settings without entering a Recurring Billing ID, an error is displayed. If the mode is set to Demo, it now diplays a notice. I also corrected a few typos and commented most of the code.  
 
 = 1.4 = 
 
@@ -125,6 +138,11 @@ Twitter: [@RLRottman](https://twitter.com/RLRottman)
 
 
 == Upgrade Notice ==
+
+= 2.0 = 
+
+* Combined this plugin with my other plugin, WP Payeezy Donate. All features found in that plugin are now rolled into this plugin. Going forward, this will be the only plugin updated, assuming updates are needed. Settings page now shows an error if you don't enter the Payment Page ID or the Transaction Key. If you select a Transaction Type option that supports Recurring and if you save the settings without entering a Recurring Billing ID, an error is displayed. If the mode is set to Demo, it now diplays a notice. I also corrected a few typos and commented most of the code.  
+
 
 = 1.2 = 
 
