@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Payeezy Pay
 Version: 2.0
-Plugin URI: http://bentcorner.com/wp-payeezy-pay/
+Plugin URI: http://www.richard-rottman.com/
 Description: Connects a WordPress site to First Data's Payeezy Gateway, formally known as Global Gateway e4, using the Payment Page or Hosted Checkout method. Handles both payments and donations. No SSL ! 
 Author: Richard Rottman
 Author URI: http://www.richard-rottman.com/
