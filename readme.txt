@@ -114,7 +114,7 @@ Twitter: [@RLRottman](https://twitter.com/RLRottman)
 
 = 2.0 = 
 
-* Combined this plugin with my other plugin, WP Payeezy Donate. All features found in that plugin are now rolled into this plugin. Going forward, this will be the only plugin updated, assuming updates are needed. Settings page now shows an error if you don't enter the Payment Page ID or the Transaction Key. If you select a Transaction Type option that supports Recurring and if you save the settings without entering a Recurring Billing ID, an error is displayed. If the mode is set to Demo, it now diplays a notice. I also corrected a few typos and commented most of the code.  
+* Combined this plugin with my other plugin, WP Payeezy Donate. All features found in that plugin are now rolled into this plugin. Going forward, this will be the only plugin updated, assuming updates are needed. If you select a Transaction Type option that supports Recurring and if you save the settings without entering a Recurring Billing ID, an error is displayed. If the mode is set to Demo, it now displays a notice. I also corrected a few typos and commented most of the code.  
 
 = 1.4 = 
 
@@ -141,8 +141,7 @@ Twitter: [@RLRottman](https://twitter.com/RLRottman)
 
 = 2.0 = 
 
-* Combined this plugin with my other plugin, WP Payeezy Donate. All features found in that plugin are now rolled into this plugin. Going forward, this will be the only plugin updated, assuming updates are needed. Settings page now shows an error if you don't enter the Payment Page ID or the Transaction Key. If you select a Transaction Type option that supports Recurring and if you save the settings without entering a Recurring Billing ID, an error is displayed. If the mode is set to Demo, it now diplays a notice. I also corrected a few typos and commented most of the code.  
-
+* Combined this plugin with my other plugin, WP Payeezy Donate. All features found in that plugin are now rolled into this plugin. Going forward, this will be the only plugin updated, assuming updates are needed. If you select a Transaction Type option that supports Recurring and if you save the settings without entering a Recurring Billing ID, an error is displayed. If the mode is set to Demo, it now displays a notice. I also corrected a few typos and commented most of the code.  
 
 = 1.2 = 
 
