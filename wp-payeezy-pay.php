@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: WP Payeezy Pay
+Plugin Name: WP Payeezy Payment Page
 Version: 2.0
 Plugin URI: http://bentcorner.com/wp-payeezy-pay/
 Description: Connects a WordPress site to First Data's Payeezy Gateway, formally known as Global Gateway e4, using the Payment Page or Hosted Checkout method. Handles both payments and donations. No SSL ! 
