@@ -1,7 +1,8 @@
+<?php include 'key.php';?>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Processing...</title>
+<title>Processing your donation...</title>
 <style media="screen" type="text/css">
 body {
 	background-color: #efefef;
@@ -51,7 +52,6 @@ $x_user1 = $_POST["x_user1"];
 $x_user2 = $_POST["x_user2"];
 $x_user3 = $_POST["x_user3"];
 $x_login = $_POST["x_login"];
-$transaction_key = $_POST["transaction_key"];
 $x_first_name = $_POST["x_first_name"];
 $x_last_name = $_POST["x_last_name"];
 $x_address = $_POST["x_address"];

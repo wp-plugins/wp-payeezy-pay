@@ -1,8 +1,9 @@
+<?php include 'key.php';?>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>
-Processing...
+Processing your donation...
 </title>
 <style media="screen" type="text/css">
 
@@ -64,7 +65,6 @@ $x_user1 = $_POST["x_user1"];
 $x_user2 = $_POST["x_user2"];
 $x_user3 = $_POST["x_user3"];
 $x_login = $_POST["x_login"];
-$transaction_key = $_POST["transaction_key"];
 $x_recurring_billing_id = $_POST["x_recurring_billing_id"];
 $x_recurring_billing_start_date = date('Y-m-d', strtotime("+30 days"));
 $x_recurring_billing_end_date = date('Y-m-d', strtotime("+4 years"));   

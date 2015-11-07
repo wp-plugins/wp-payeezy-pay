@@ -1,7 +1,8 @@
+<?php include 'key.php';?>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Processing...</title>
+<title>Processing your payment...</title>
 <style media="screen" type="text/css">
 body {
 	background-color: #efefef;
@@ -29,10 +30,8 @@ else  { $post_url = "https://demo.globalgatewaye4.firstdata.com/payment";
 
 ?>
 <form action="<?php echo $post_url ;?>" method="POST" name="myForm" id="myForm"->
+
   <?php
-	
-	
-	
 $x_amount = $_POST["x_amount"];
 $x_invoice_num = $_POST["x_invoice_num"];
 $x_po_num = $_POST["x_po_num"];
@@ -41,7 +40,6 @@ $x_user1 = $_POST["x_user1"];
 $x_user2 = $_POST["x_user2"];
 $x_user3 = $_POST["x_user3"];
 $x_login = $_POST["x_login"];
-$transaction_key = $_POST["transaction_key"];
 $x_first_name = $_POST["x_first_name"];
 $x_last_name = $_POST["x_last_name"];
 $x_address = $_POST["x_address"];
@@ -94,6 +92,6 @@ echo ('<input name="x_currency_code" value="' . $x_currency_code . '" type="hidd
 <input type="hidden" name="x_show_form" value="PAYMENT_FORM"/>
 </form>
 <h2>Processing your  $<?php echo $x_amount;?> payment <?php echo $x_first_name;?>, please wait...</h2>
-<script type='text/javascript'>document.myForm.submit();</script><!-- Automaticlly sends the final request to the Payeezy Gateway -->
+<!-- --> <script type='text/javascript'>document.myForm.submit();</script> <!-- Automaticlly sends the final request to the Payeezy Gateway -->
 </body>
 </html>
