@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/RichardRottman
 Tags: First Data, Payeezy, Global Gateway e4, Payments, Hosted Checkout, Payment Page, E-Commerce, Recurring
 Requires at least: 3.0.1
 Tested up to: 4.3
-Stable tag: 2.1
+Stable tag: 2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -219,6 +219,10 @@ Twitter: [@RLRottman](https://twitter.com/RLRottman)
 
 == Changelog ==
 
+= 2.2 = 
+
+* Now the cardholder making a donation cannot proceed to Payeezy without picking an amount.  
+
 = 2.1 = 
 
 * Made a change that strengthens security of the plugin. The Transaction Key is no longer visable in the HTML form. It's now stored in a tiny file called key.php located in the plugin's directory.   
@@ -249,6 +253,10 @@ Twitter: [@RLRottman](https://twitter.com/RLRottman)
 
 
 == Upgrade Notice ==
+
+= 2.2 = 
+
+* Now the cardholder making a donation cannot proceed to Payeezy without picking an amount.  
 
 = 2.1 = 
 

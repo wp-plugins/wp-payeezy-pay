@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: WP Payeezy Payment Page
-Version: 2.1
+Version: 2.101
 Plugin URI: http://bentcorner.com/wp-payeezy-pay/
 Description: Connects a WordPress site to First Data's Payeezy Gateway, formally known as Global Gateway e4, using the Payment Page or Hosted Checkout method. Handles both payments and donations. No SSL ! 
 Author: Rick Rottman
@@ -685,11 +685,11 @@ if (($mode2 == "donate") || ($mode2 == "donate-rec")) {
 echo '<label>Donation Amount</label>';
 echo '<input type="radio" name="x_amount1" value="10.00"> $10<br>';
 echo '<input type="radio" name="x_amount1" value="25.00"> $25<br>';
-echo '<input type="radio" name="x_amount1" value="50.00"> $50<br>';
+echo '<input type="radio" name="x_amount1" checked="checked" value="50.00"> $50<br>';
 echo '<input type="radio" name="x_amount1" value="75.00"> $75<br>';
 echo '<input type="radio" name="x_amount1" value="100.00"> $100<br>';
 echo '<input type="radio" name="x_amount1" value="0.00"> Other $ <input type="text" name="x_amount2" value="" id="x_amount"><br>';
-echo '<br>';
+echo '</select>';
 }
 
 else {
