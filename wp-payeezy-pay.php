@@ -1,12 +1,13 @@
 <?php
 /*
-Plugin Name: WP Payeezy Payment Page
-Version: 2.2
-Plugin URI: http://bentcorner.com/wp-payeezy-pay/
-Description: Connects a WordPress site to First Data's Payeezy Gateway, formally known as Global Gateway e4, using the Payment Page or Hosted Checkout method. Handles both payments and donations. No SSL ! 
-Author: Rick Rottman
-Author URI: http://bentcorner.com/
+Plugin Name: WP Payeezy Pay
+Version: 2.25
+Plugin URI: http://www.richard-rottman.com/premium-support-for-wp-payeezy-payment-page/
+Description: Connects a WordPress site to First Data's Payeezy Gateway using the Payment Page method of integration. 
+Author: Richard Rottman
+Author URI: http://www.richard-rottman.com/
 */
+
 
 function wppayeezypaymentform() {
 $x_login = get_option('x_login');
@@ -57,7 +58,9 @@ else {
 // These fields only show on the form if they are named.
 // If they are left blank, they will NOT show on the published
 // payment form and will NOT be sent to the Payeezy gateway.
+//
 // S T A R T
+//
 // This is the Ref. Num that shows in Transactions on the front page.
 $x_invoice_num = get_option('x_invoice_num');
 
@@ -69,25 +72,30 @@ $x_po_num = get_option('x_po_num');
 
 // This shows up on the final order form as "Item" unless Invoice Number is used.
 // If there is an Invoice Number sent, that overrides the Description. 
+
 $x_description = get_option('x_description');
 
 // Just an extra reference number if Invoice Number and Customer Reference Number are
 // not enough referance numbers for your purposes. 
+
 $x_reference_3 = get_option('x_reference_3');
 
 // Next three are custom fields that if passed over to Payeezy, will show populated on
 // the secure order form and the information collected will be passed a long with all the
 // other info. 
+
 $x_user1 = get_option('x_user1') ;
 $x_user2 = get_option('x_user2') ;
 $x_user3 = get_option('x_user3') ;
 
 // If you want to collect the customer's phone number and/or email address, you can do so
 // by giving these two fields a name, such as "phone" and "email."
+
 $x_phone = get_option('x_phone') ;
 $x_email = get_option('x_email') ;
-// E N D 
 
+// E N D 
+//
 // Tells WordPress to start remembering everything that would normally be outputted, but
 // not to do anything with it yet.
 ob_start();
@@ -777,18 +785,17 @@ function wppayeezypay_settings_page() {
 $readme_wp_payeezy_pay = plugins_url('wp-payeezy-pay/readme.txt');
 ?>
   <div class="wrap">
-    <h2>WP Payeey Payment Page Settings</h2>
+    <h2><span class="dashicons dashicons-cart" style="font-size: 28pt;"></span>&nbsp;&nbsp;&nbsp;&nbsp;WP Payeezy Pay Settings</h2>
 
     <form method="post" action="options.php">
       <?php settings_fields( 'wppayeezypay-group' ); ?>
       <?php do_settings_sections( 'wppayeezypay-group' ); ?>
       <div style="background: none repeat scroll 0 0 #fff;border: 1px solid #bbb;color: #444;margin: 10px 0;padding: 20px;text-shadow: 1px 1px #FFFFFF;width:700px">
-<p>Need a First Data Payeezy account? I can help with that. Just send me an <a href="mailto:rlrottman@gmail.com">email</a>
-<hr>
-<p>To read posts on my personal blog about all things Payeezy, <a href="http://bentcorner.com/category/e-commerce/payeezy/" target="_blank">click here</a>.</p>
-<hr>
-      <h3>Settings</h3>
-      <em>Recurring Billing ID is not required if you are not processing recurring transactions. </em>
+<p>Need a First Data Payeezy account? I can help with that. Just send me an <a href="mailto:rlrottman@gmail.com">email</a>.
+  <hr>
+</p>
+      <h3><span class="dashicons dashicons-admin-settings"></span>&nbsp;Settings</h3>
+      <em><b>Recurring Billing ID is not required if you are not processing recurring transactions.</b> </em>
       <table class="form-table">
       <tr valign="top">
         <th scope="row">Payment Page ID</th>
@@ -835,11 +842,11 @@ $readme_wp_payeezy_pay = plugins_url('wp-payeezy-pay/readme.txt');
         <tr valign="top">
           <th scope="row"></th>
           <td valign="top">
-          <em>* Plan must have the Frequecy set to "Monthly."</em></td>
+          <em>* Plan <b>must</b> have the Frequecy set to "Monthly."</em></td>
         </tr>
     </table>
     <hr>
-    <h3>Optional Payment Form Fields</h3>
+    <h3><span class="dashicons dashicons-admin-settings"></span>&nbsp;Optional Payment Form Fields</h3>
     <table class="form-table">
       <tr valign="top"> <em>If you would like to use any of these fields, just assign a name to them<br>
         and they will appear on your form with that name. Do not assign a name, <br>
@@ -892,10 +899,11 @@ $readme_wp_payeezy_pay = plugins_url('wp-payeezy-pay/readme.txt');
     ?>
  <p>To add the Payeezy payment form to a Page or a Post, add the following <a href="https://codex.wordpress.org/Shortcode" target="_blank">shortcode</a> in the Page or Post's content:<br>
 <br>
-    <pre> [wp_payeezy_payment_form] </pre>
+    <center><pre> [wp_payeezy_payment_form] </pre></center>
 </br>
     </p>
-    <p>Need help? Have a suggestion for making this plugin better? Feel free to contact me at <a href="mailto:rlrottman@gmail.com">rlrottman@gmail.com</a>. I welcome your questions and/or input.</p>
+    <p>Is there something you need changed or modified? I offer premium support at a very reasonable price.<br>
+    <b> <a href="http://www.richard-rottman.com/premium-support-for-wp-payeezy-payment-page/" target="_blank">Go here to submit a support ticket</a></b>.</p>
 <hr>
 </form>
 </div>
