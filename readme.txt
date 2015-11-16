@@ -4,11 +4,11 @@ Donate link: https://www.paypal.me/RichardRottman
 Tags: First Data, Payeezy, Global Gateway e4, Payments, Hosted Checkout, Payment Page, E-Commerce, Recurring
 Requires at least: 3.0.1
 Tested up to: 4.3
-Stable tag: 2.2
+Stable tag: 2.25
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Connects a WordPress site to First Data's Payeezy Gateway. No SSL required! 
+Connects a WordPress site to First Data's Payeezy Gateway. 
 
 == Description ==
 
@@ -200,14 +200,6 @@ To add anything, you would just add it to the value you added to your theme’s 
                 
 }
 
-= May I contact you if I have any questions or suggestions? =
-
-Yes, feel free to contact me by email or Twitter.
-
-Email: [rlrottman@gmail.com](mailto:rlrottman@gmail.com)
-
-Twitter: [@RLRottman](https://twitter.com/RLRottman)
-
 
 == Screenshots ==
 
@@ -218,6 +210,10 @@ Twitter: [@RLRottman](https://twitter.com/RLRottman)
 
 
 == Changelog ==
+
+= 2.25 = 
+
+* Minor changes involving support links. 
 
 = 2.2 = 
 
@@ -253,6 +249,10 @@ Twitter: [@RLRottman](https://twitter.com/RLRottman)
 
 
 == Upgrade Notice ==
+
+= 2.25 = 
+
+* Minor changes involving support links. I also added WP dashicons. 
 
 = 2.2 = 
 
